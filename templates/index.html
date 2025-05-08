@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Teaching Assistant</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <h1>AI Teaching Assistant</h1>
+    <div>
+        <textarea id="question" placeholder="Ask a question..." rows="4" cols="50"></textarea>
+        <button onclick="askQuestion()">Ask</button>
+    </div>
+    <div>
+        <h2>Answer</h2>
+        <p id="answer"></p>
+    </div>
+
+    <script>
+        function askQuestion() {
+            const question = document.getElementById('question').value;
+            axios.post('/ask', { question: question })
+                .then(response => {
+                    document.getElementById('answer').innerText = response.data.response;
+                })
+                .catch(error => {
+                    document.getElementById('answer').innerText = "Error: " + error.response.data.error;
+                });
+        }
+    </script>
+</body>
+</html>
